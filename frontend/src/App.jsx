@@ -3,11 +3,11 @@ import { taskService } from './services/api';
 import './App.css';
 
 import TaskList from './components/TaskList';
-
 import TaskForm from './components/TaskForm';
 
 function App() {
   const [tasks, setTasks] = useState([]);
+  const [editingTask, setEditingTask] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -32,6 +32,16 @@ function App() {
       setTasks([newTask, ...tasks]);
     } catch (err) {
       alert('Error adding task: ' + err.message);
+    }
+  };
+
+  const handleUpdateTask = async (taskData) => {
+    try {
+      const updated = await taskService.updateTask(editingTask.id, taskData);
+      setTasks(tasks.map(t => t.id === updated.id ? updated : t));
+      setEditingTask(null);
+    } catch (err) {
+      alert('Error updating task: ' + err.message);
     }
   };
 
@@ -63,8 +73,22 @@ function App() {
   return (
     <div className="container">
       <h1>Todo List Master</h1>
-      <TaskForm onAdd={handleAddTask} />
-      <TaskList tasks={tasks} onDelete={handleDeleteTask} onToggle={handleToggleTask} />
+
+      <TaskForm
+        onSubmit={editingTask ? handleUpdateTask : handleAddTask}
+        initialData={editingTask}
+        onCancel={editingTask ? () => setEditingTask(null) : null}
+      />
+
+      <TaskList
+        tasks={tasks}
+        onDelete={handleDeleteTask}
+        onToggle={handleToggleTask}
+        onEdit={(task) => {
+          setEditingTask(task);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+      />
     </div>
   );
 }

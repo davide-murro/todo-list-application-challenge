@@ -4,8 +4,9 @@
  * @param {Object} task - The task object containing title and description
  * @param {Function} onDelete - Callback to delete the task
  * @param {Function} onToggle - Callback to toggle completion
+ * @param {Function} onEdit - Callback to start editing
  */
-function TaskItem({ task, onDelete, onToggle }) {
+function TaskItem({ task, onDelete, onToggle, onEdit }) {
     return (
         <div>
             <div>
@@ -21,9 +22,14 @@ function TaskItem({ task, onDelete, onToggle }) {
                     )}
                 </div>
             </div>
-            <button onClick={() => onDelete(task.id)}>
-                Delete
-            </button>
+            <div>
+                <button onClick={() => onEdit(task)}>
+                    Edit
+                </button>
+                <button onClick={() => onDelete(task.id)}>
+                    Delete
+                </button>
+            </div>
         </div>
     );
 }

@@ -1,25 +1,40 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 /**
- * TaskForm Component (Creation Only)
+ * TaskForm Component
  * 
- * @param {Function} onAdd - Callback function to handle the new task
+ * @param {Function} onSubmit - Callback function to handle the task data
+ * @param {Object} initialData - Optional data for editing
+ * @param {Function} onCancel - Optional callback to cancel editing
  */
-function TaskForm({ onAdd }) {
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
+function TaskForm({ onSubmit, initialData = null, onCancel = null }) {
+    const [title, setTitle] = useState(initialData?.title || '');
+    const [description, setDescription] = useState(initialData?.description || '');
+
+    useEffect(() => {
+        if (initialData) {
+            setTitle(initialData.title || '');
+            setDescription(initialData.description || '');
+        } else {
+            setTitle('');
+            setDescription('');
+        }
+    }, [initialData]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!title.trim()) return;
 
-        onAdd({ title, description });
-        setTitle('');
-        setDescription('');
+        onSubmit({ title, description });
+        if (!initialData) {
+            setTitle('');
+            setDescription('');
+        }
     };
 
     return (
         <div>
+            <h3>{initialData ? 'Edit Task' : 'Add New Task'}</h3>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
@@ -33,7 +48,16 @@ function TaskForm({ onAdd }) {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 />
-                <button type="submit">Add Task</button>
+                <div>
+                    <button type="submit">
+                        {initialData ? 'Update Task' : 'Add Task'}
+                    </button>
+                    {onCancel && (
+                        <button type="button" onClick={onCancel}>
+                            Cancel
+                        </button>
+                    )}
+                </div>
             </form>
         </div>
     );
