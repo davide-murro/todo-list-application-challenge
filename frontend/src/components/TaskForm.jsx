@@ -33,9 +33,9 @@ function TaskForm({ onSubmit, initialData = null, onCancel = null }) {
     };
 
     return (
-        <div>
+        <div className="form-card">
             <h3>{initialData ? 'Edit Task' : 'Add New Task'}</h3>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="input-group">
                 <input
                     type="text"
                     placeholder="What needs to be done?"
@@ -47,13 +47,14 @@ function TaskForm({ onSubmit, initialData = null, onCancel = null }) {
                     placeholder="Description (optional)"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
+                    rows="3"
                 />
-                <div>
+                <div className="button-row">
                     <button type="submit">
                         {initialData ? 'Update Task' : 'Add Task'}
                     </button>
                     {onCancel && (
-                        <button type="button" onClick={onCancel}>
+                        <button type="button" onClick={onCancel} className="secondary">
                             Cancel
                         </button>
                     )}

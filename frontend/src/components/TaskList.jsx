@@ -11,7 +11,7 @@ import TaskItem from './TaskItem';
 function TaskList({ tasks, onDelete, onToggle, onEdit }) {
     if (tasks.length === 0) {
         return (
-            <div>
+            <div className="empty-state">
                 <p>Your list is empty. Add your first task!</p>
             </div>
         );

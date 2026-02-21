@@ -8,25 +8,28 @@
  */
 function TaskItem({ task, onDelete, onToggle, onEdit }) {
     return (
-        <div>
-            <div>
+        <div className="task-item">
+            <div className="task-content-wrapper">
                 <input
                     type="checkbox"
+                    className="checkbox-custom"
                     checked={!!task.is_completed}
                     onChange={() => onToggle(task.id)}
                 />
-                <div>
-                    <h3>{task.title}</h3>
+                <div className="task-info">
+                    <strong>
+                        {task.title}
+                    </strong>
                     {task.description && (
                         <p>{task.description}</p>
                     )}
                 </div>
             </div>
-            <div>
-                <button onClick={() => onEdit(task)}>
+            <div className="task-actions">
+                <button className="secondary" onClick={() => onEdit(task)}>
                     Edit
                 </button>
-                <button onClick={() => onDelete(task.id)}>
+                <button className="danger" onClick={() => onDelete(task.id)}>
                     Delete
                 </button>
             </div>
