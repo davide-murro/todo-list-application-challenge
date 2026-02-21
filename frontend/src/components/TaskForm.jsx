@@ -10,6 +10,7 @@ import { useState, useEffect } from 'react';
 function TaskForm({ onSubmit, initialData = null, onCancel = null }) {
     const [title, setTitle] = useState(initialData?.title || '');
     const [description, setDescription] = useState(initialData?.description || '');
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
         if (initialData) {
@@ -21,14 +22,19 @@ function TaskForm({ onSubmit, initialData = null, onCancel = null }) {
         }
     }, [initialData]);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!title.trim()) return;
+        if (!title.trim() || isSubmitting) return;
 
-        onSubmit({ title, description });
-        if (!initialData) {
-            setTitle('');
-            setDescription('');
+        setIsSubmitting(true);
+        try {
+            await onSubmit({ title, description });
+            if (!initialData) {
+                setTitle('');
+                setDescription('');
+            }
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -50,11 +56,11 @@ function TaskForm({ onSubmit, initialData = null, onCancel = null }) {
                     rows="3"
                 />
                 <div className="button-row">
-                    <button type="submit">
+                    <button type="submit" disabled={isSubmitting}>
                         {initialData ? 'Update Task' : 'Add Task'}
                     </button>
                     {onCancel && (
-                        <button type="button" onClick={onCancel} className="secondary">
+                        <button type="button" onClick={onCancel} className="secondary" disabled={isSubmitting}>
                             Cancel
                         </button>
                     )}

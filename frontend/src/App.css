@@ -95,6 +95,13 @@ button.danger:hover {
     background: var(--danger-hover);
 }
 
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(0.2);
+    transform: none !important;
+}
+
 /* Filter Bar */
 .filter-bar {
     display: flex;

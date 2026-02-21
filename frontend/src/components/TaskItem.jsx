@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 /**
  * TaskItem Component (Display Only)
  * 
@@ -7,6 +9,28 @@
  * @param {Function} onEdit - Callback to start editing
  */
 function TaskItem({ task, onDelete, onToggle, onEdit }) {
+    const [isProcessing, setIsProcessing] = useState(false);
+
+    const handleToggle = async () => {
+        if (isProcessing) return;
+        setIsProcessing(true);
+        try {
+            await onToggle(task.id);
+        } finally {
+            setIsProcessing(false);
+        }
+    };
+
+    const handleDelete = async () => {
+        if (isProcessing) return;
+        setIsProcessing(true);
+        try {
+            await onDelete(task.id);
+        } finally {
+            setIsProcessing(false);
+        }
+    };
+
     return (
         <div className="task-item">
             <div className="task-content-wrapper">
@@ -14,7 +38,8 @@ function TaskItem({ task, onDelete, onToggle, onEdit }) {
                     type="checkbox"
                     className="checkbox-custom"
                     checked={!!task.is_completed}
-                    onChange={() => onToggle(task.id)}
+                    onChange={handleToggle}
+                    disabled={isProcessing}
                 />
                 <div className="task-info">
                     <strong>
@@ -26,10 +51,10 @@ function TaskItem({ task, onDelete, onToggle, onEdit }) {
                 </div>
             </div>
             <div className="task-actions">
-                <button className="secondary" onClick={() => onEdit(task)}>
+                <button className="secondary" onClick={() => onEdit(task)} disabled={isProcessing}>
                     Edit
                 </button>
-                <button className="danger" onClick={() => onDelete(task.id)}>
+                <button className="danger" onClick={handleDelete} disabled={isProcessing}>
                     Delete
                 </button>
             </div>
