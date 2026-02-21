@@ -35,6 +35,28 @@ function App() {
     }
   };
 
+  const handleDeleteTask = async (id) => {
+    try {
+      await taskService.deleteTask(id);
+      setTasks(tasks.filter(t => t.id !== id));
+    } catch (err) {
+      alert('Error deleting task: ' + err.message);
+    }
+  };
+
+  const handleToggleTask = async (id) => {
+    const task = tasks.find(t => t.id === id);
+    if (!task) return;
+
+    try {
+      const newStatus = !task.is_completed;
+      await taskService.updateTask(id, { is_completed: newStatus });
+      setTasks(tasks.map(t => t.id === id ? { ...t, is_completed: newStatus } : t));
+    } catch (err) {
+      alert('Error updating task: ' + err.message);
+    }
+  };
+
   if (loading) return <div>Loading tasks...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -42,7 +64,7 @@ function App() {
     <div className="container">
       <h1>Todo List Master</h1>
       <TaskForm onAdd={handleAddTask} />
-      <TaskList tasks={tasks} />
+      <TaskList tasks={tasks} onDelete={handleDeleteTask} onToggle={handleToggleTask} />
     </div>
   );
 }
