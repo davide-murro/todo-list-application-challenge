@@ -8,6 +8,7 @@ import TaskForm from './components/TaskForm';
 function App() {
   const [tasks, setTasks] = useState([]);
   const [editingTask, setEditingTask] = useState(null);
+  const [filter, setFilter] = useState('all'); // 'all', 'active', 'completed'
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -67,6 +68,12 @@ function App() {
     }
   };
 
+  const filteredTasks = tasks.filter(task => {
+    if (filter === 'active') return !task.is_completed;
+    if (filter === 'completed') return task.is_completed;
+    return true;
+  });
+
   if (loading) return <div>Loading tasks...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -80,8 +87,14 @@ function App() {
         onCancel={editingTask ? () => setEditingTask(null) : null}
       />
 
+      <div className="filter-bar">
+        <button onClick={() => setFilter('all')}>All</button>
+        <button onClick={() => setFilter('active')}>Active</button>
+        <button onClick={() => setFilter('completed')}>Completed</button>
+      </div>
+
       <TaskList
-        tasks={tasks}
+        tasks={filteredTasks}
         onDelete={handleDeleteTask}
         onToggle={handleToggleTask}
         onEdit={(task) => {
