@@ -2,7 +2,7 @@
 
 A full-stack Todo List application built with React (Frontend) and Node.js/Express (Backend), featuring a SQL Server database and full Docker support.
 
-More details in the file: [react-fullstack-challenge-2-1-.pdf]([https://github.com/davide-murro/slot-game/blob/main/SlotGamesDeve%20-%20Test%20assignment.docx](https://github.com/davide-murro/todo-list-application-challenge/blob/main/react-fullstack-challenge-2-1-.pdf)).
+More details in the file: [react-fullstack-challenge-2-1-.pdf](https://github.com/davide-murro/todo-list-application-challenge/blob/main/react-fullstack-challenge-2-1-.pdf).
 
 ## 🛠 Backend (Node.js + Express)
 
