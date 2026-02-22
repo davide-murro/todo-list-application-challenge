@@ -171,8 +171,9 @@ button:disabled {
 }
 
 .checkbox-custom {
-    width: 22px;
-    height: 22px;
+    margin: 0;
+    width: 1.5rem;
+    height: 1.5rem;
     cursor: pointer;
     accent-color: var(--primary);
 }
