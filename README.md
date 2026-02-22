@@ -1,16 +1,67 @@
-# React + Vite
+# Todo List Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack Todo List application built with React (Frontend) and Node.js/Express (Backend), featuring a SQL Server database and full Docker support.
 
-Currently, two official plugins are available:
+## 🛠 Backend (Node.js + Express)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The backend provides a RESTful API to manage tasks and uses SQL Server for persistent storage.
 
-## React Compiler
+### Features
+- **Node.js 24**: Built using Node.js environment.
+- **Database Support**: Use `msnodesqlv8` (Windows native) locally and `mssql` (Tedious) in Docker.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Running Locally
+1. `cd backend`
+2. `npm install`
+3. `npm run dev`
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 💻 Frontend (React + Vite)
+
+A modern, responsive user interface for managing your tasks.
+
+### Features
+- **Vite**: Fast build tool and development server.
+- **React 19**: Utilizing React features.
+- **Nginx Serving**: In Docker, the app is built and served via Nginx for high availability.
+
+### Running Locally
+1. `cd frontend`
+2. `npm install`
+3. `npm run dev`
+
+---
+
+## 🚀 Quick Start with Docker
+
+The easiest way to run the entire stack is using Docker Compose.
+
+### Prerequisites
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running.
+- **SQL Server Configuration**: Ensure **TCP/IP** is enabled in your SQL Server Configuration Manager and the port is set to `1433`.
+
+### Commands
+```bash
+docker-compose up --build
+```
+- **Frontend**: [http://localhost:80](http://localhos:80)
+- **Backend API**: [http://localhost:5000/api/tasks](http://localhost:5000/api/tasks)
+
+---
+
+## 🛠 Environment Variables
+
+### Backend (`/backend/.env`)
+- `NODE_ENV`: Environment (default: `development`)
+- `HOST`: Server host (default: `0.0.0.0`)
+- `PORT`: Server port (default: 5000)
+- `DB_HOST`: Database host (use `host.docker.internal` for Docker)
+- `DB_NAME`: Database name
+- `DB_INSTANCE`: SQL Server instance (e.g., `SQLEXPRESS`)
+- `DB_PORT`: Database port (default: 1433)
+- `DB_USER`: Database user (default: `sa`)
+- `DB_PASSWORD`: Database password (default: `[PASSWORD]`)
+
+### Frontend (`/frontend/.env`)
+- `VITE_API_URL`: URL of the backend API
