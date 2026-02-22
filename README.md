@@ -4,6 +4,7 @@ A full-stack Todo List application built with React (Frontend) and Node.js/Expre
 
 More details in the file: [react-fullstack-challenge-2-1-.pdf](https://github.com/davide-murro/todo-list-application-challenge/blob/main/react-fullstack-challenge-2-1-.pdf).
 
+
 ## 🛠 Backend (Node.js + Express)
 
 The backend provides a RESTful API to manage tasks and uses SQL Server for persistent storage.
@@ -17,7 +18,6 @@ The backend provides a RESTful API to manage tasks and uses SQL Server for persi
 2. `npm install`
 3. `npm run dev`
 
----
 
 ## 💻 Frontend (React + Vite)
 
@@ -33,7 +33,6 @@ A modern, responsive user interface for managing your tasks.
 2. `npm install`
 3. `npm run dev`
 
----
 
 ## 🚀 Quick Start with Docker
 
@@ -50,7 +49,23 @@ docker-compose up --build
 - **Frontend**: [http://localhost:80](http://localhos:80)
 - **Backend API**: [http://localhost:5000/api/tasks](http://localhost:5000/api/tasks)
 
----
+
+## 🗺 Application Navigation & Usage
+
+The To-Do List application is designed to manage your daily tasks easily.
+
+### Structure:
+
+1.  **Add a Task**: Add a task with title and description.
+2.  **View Tasks**: Display tasks in a list format.
+3.  **Toggle Status**: Checkbox to toggle the task status between "Active" and "Completed".
+4.  **Edit a Task**: Edit each task from the list.
+5.  **Delete a Task**: Delete each task from the list.
+6.  **Filter Tasks**: Filter bar to view:
+    - **All**: Shows every task.
+    - **Active**: Shows only uncompleted tasks.
+    - **Completed**: Shows only finished tasks.
+
 
 ## 🛠 Environment Variables
 
@@ -67,3 +82,34 @@ docker-compose up --build
 
 ### Frontend (`/frontend/.env`)
 - `VITE_API_URL`: URL of the backend API
+
+
+## ☁️ Deploying on GCP (Google Cloud Platform)
+
+The application is containerized, making **Google Cloud Run** the ideal deployment target.
+
+### Steps to Deploy:
+
+1.  **Prepare GCP Project:**
+    - Create a project in the [GCP Console](https://console.cloud.google.com/).
+    - Enable the **Cloud Run** and **Artifact Registry** APIs.
+    - Install the [Google Cloud SDK](https://cloud.google.com/sdk/docs/install) locally.
+
+2.  **Containerize & Push:**
+    - Authenticate: `gcloud auth login`
+    - Configure Docker: `gcloud auth configure-docker`
+    - Create a repository in Artifact Registry for your images.
+    - Tag and push your backend and frontend images.
+
+3.  **Deploy Backend:**
+    - Deploy to Cloud Run: `gcloud run deploy backend --image [IMAGE_URL]`
+    - Note the generated URL for the next step.
+
+4.  **Deploy Frontend:**
+    - Update `VITE_API_URL` in the frontend config to point to the backend URL.
+    - Rebuild the frontend image.
+    - Deploy to Cloud Run: `gcloud run deploy frontend --image [IMAGE_URL]`
+
+5.  **Database Configuration:**
+    - Ensure the Cloud Run services are authorized to connect to the instance.
+    - Update backend environment variables with Cloud SQL connection details.
