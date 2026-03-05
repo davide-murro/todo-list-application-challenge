@@ -7,7 +7,9 @@
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "docker": "docker run -p 80:80 todo-list-application-challenge-frontend",
+    "docker-compose": "docker-compose up --build"
   },
   "dependencies": {
     "react": "^19.2.0",

@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node index.js"
+    "dev": "node index.js",
+    "docker": "docker run -p 5000:5000 todo-list-application-challenge-backend",
+    "docker-compose": "docker-compose up --build"
   },
   "keywords": [],
   "author": "",

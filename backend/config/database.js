@@ -17,7 +17,7 @@ if (!isDocker) {
         });
     };
 
-    module.exports = { query, connectionString, sql };
+    module.exports = { query, sql };
 } else {
     // Docker/Linux
     sql = require('mssql');
